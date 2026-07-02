@@ -392,23 +392,10 @@ The solution can be viewed as an architecture with **seven main blocks**:
   init: {
     "theme": "dark",
     "themeVariables": {
-      "background": "#0b1220",
-      "primaryColor": "#000000",
+      "background": "#020617",
       "primaryTextColor": "#ffffff",
-      "primaryBorderColor": "#000000",
       "lineColor": "#14b8a6",
-      "secondaryColor": "#000000",
-      "secondaryTextColor": "#ffffff",
-      "secondaryBorderColor": "#000000",
-      "tertiaryColor": "#000000",
-      "tertiaryTextColor": "#ffffff",
-      "tertiaryBorderColor": "#000000",
-      "mainBkg": "#000000",
-      "nodeBorder": "#000000",
-      "clusterBkg": "#020617",
-      "clusterBorder": "#000000",
-      "titleColor": "#ffffff",
-      "edgeLabelBackground": "#0b1220",
+      "defaultLinkColor": "#14b8a6",
       "fontFamily": "Inter, Segoe UI, Arial, sans-serif"
     }
   }
@@ -416,61 +403,74 @@ The solution can be viewed as an architecture with **seven main blocks**:
 
 flowchart TD
 
-    A["FlightMarket / aviation website"] --> B["Selenium automation<br/>BOTHELIPONTO.py"]
-    B --> C["Helipad records + metadata"]
-    C --> D["Coordinates CSV<br/>cordenadasheli.csv"]
-    D --> E["Coordinate conversion<br/>Transformarcordenadas.py"]
-    E --> F["Geographic bounding boxes"]
-    F --> G["ESRI World Imagery<br/>XYZ tile download"]
-    G --> H["Image mosaics by region<br/>Imagens.ipynb"]
-    H --> I["Manual visual triage"]
-    I --> J["Selected images with helipads"]
-    J --> K["Roboflow upload"]
-    K --> L["Bounding box annotation<br/>single class: helipad"]
-    L --> M["Preprocessing + augmentations<br/>resize 640x640"]
-    M --> N["Dataset split<br/>train / valid / test"]
-    N --> O["YOLO export<br/>data.yaml + labels"]
-    O --> P["Google Colab training<br/>Ultralytics YOLOv8 / YOLOv11"]
-    P --> Q["Runs, weights and metrics<br/>runs/detect/.../best.pt"]
-    Q --> R["Quantitative evaluation<br/>mAP, Precision, Recall, confusion matrix"]
-    Q --> S["Qualitative analysis<br/>hits, false positives, false negatives"]
-    Q --> T["Inference on unseen neighborhood<br/>New Images/"]
-    T --> U["Generalization assessment"]
-    Q --> V["Optional web app<br/>Site.py"]
+%% ===== CLASSES (SOFISTICADO) =====
+classDef navy fill:#020817,stroke:#0a1a2f,color:#ffffff,stroke-width:2px;
+classDef group fill:#020817,stroke:#0a1a2f,color:#ffffff,stroke-width:2px;
 
-    subgraph G1["Geospatial Discovery"]
-      A
-      B
-      C
-      D
-      E
-      F
-    end
+%% ===== G1 =====
+subgraph G1["Geospatial Discovery"]
+A["FlightMarket / aviation website"]
+B["Selenium automation<br/>src/geospatial/helipad_scraper.py"]
+C["Helipad records + metadata"]
+D["Coordinates CSV"]
+E["Coordinate conversion"]
+F["Geographic bounding boxes"]
 
-    subgraph G2["Visual Acquisition"]
-      G
-      H
-      I
-      J
-    end
+A --> B --> C --> D --> E --> F
+end
 
-    subgraph G3["Dataset Engineering"]
-      K
-      L
-      M
-      N
-      O
-    end
+%% ===== G2 =====
+subgraph G2["Visual Acquisition"]
+G["ESRI World Imagery<br/>XYZ tile download"]
+H["Image mosaics by region"]
+I["Manual visual triage"]
+J["Selected images with helipads"]
 
-    subgraph G4["Modeling and Validation"]
-      P
-      Q
-      R
-      S
-      T
-      U
-      V
-    end
+G --> H --> I --> J
+end
+
+%% ===== G3 =====
+subgraph G3["Dataset Engineering"]
+K["Roboflow upload"]
+L["Bounding box annotation"]
+M["Preprocessing + augmentations"]
+N["Dataset split"]
+O["YOLO export"]
+
+K --> L --> M --> N --> O
+end
+
+%% ===== G4 =====
+subgraph G4["Modeling and Validation"]
+P["Google Colab training<br/>YOLOv8 / YOLOv11"]
+Q["Runs, weights and metrics"]
+
+R["Quantitative evaluation"]
+S["Qualitative analysis"]
+T["Inference on unseen neighborhood"]
+U["Generalization assessment"]
+
+V["Optional web app"]
+
+P --> Q
+Q --> R
+Q --> S
+Q --> T
+T --> U
+Q --> V
+end
+
+%% ===== CONEXÕES =====
+F --> G
+J --> K
+O --> P
+
+%% ===== APLICAR CORES =====
+class A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V navy;
+class G1,G2,G3,G4 group;
+
+%% ===== LINK STYLE (TURQUESA + GLOW SIMULADO) =====
+linkStyle default stroke:#14b8a6,stroke-width:2.5px,opacity:0.95;
 ```
 
 
@@ -517,7 +517,7 @@ Helipoint-Detector/
 
 > [!TIP]
 >
-> This organization facilitates navigation, reproducibility and project evolution, clearly separating collection, preprocessing, training, > inference and application.
+> This organization facilitates navigation, reproducibility and project evolution, clearly separating collection, preprocessing, training, inference and application.
 
 
 <br><br>
