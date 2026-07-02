@@ -905,7 +905,7 @@ results = model.predict(
   
 #
  
-##### <p align="center">Copyright 2026 Mindful-AI-Assistants. Code released under the  [MIT license.](https://github.com/Mindful-AI-Assistants/CDIA-Entrepreneurship-Soft-Skills-PUC-SP/blob/21961c2693169d461c6e05900e3d25e28a292297/LICENSE)
+##### <p align="center">Copyright 2026 Mindful-AI-Assistants. Code released under the  [MIT license.](https://github.com/Mindful-AI-Assistants/3-project-ai-ml-yolo-helipoint-detector/blob/75176e7db4c9e30033f64a00f783a8897ad129d1/license.md)
 
 
 
