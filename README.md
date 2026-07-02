@@ -34,8 +34,6 @@
 
 <p align="center"> <i>Not every rooftop is just... a rooftop.</i> </b> 
 
-#### <p align="center"> ⟡ We're teaching <b>YOLO</b> to <b>spot the difference.⟡ 
-
 <br>
 
 <p align="center"> ⚡
