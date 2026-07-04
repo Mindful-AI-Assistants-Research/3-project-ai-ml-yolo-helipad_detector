@@ -9,7 +9,7 @@
 <!-- ========= START HEADRE ========= -->
 # <p align="center"> 🚁 [AI/ML]() · [Project 2]() · [Computer Vision]() · [Helipad Detector]() </p>
 
-### <p align="center"> [Mission:]() Helipad Detection in São Paulo Satellite Imagery using YOLO · Responsible AI · Data Governance · LGPD 🛰️</p>
+### <p align="center"> [***Mission:***]() Helipad Detection in São Paulo Satellite Imagery using YOLO · Responsible AI · Data Governance · LGPD 🛰️</p>
 
 <br><br>
 
