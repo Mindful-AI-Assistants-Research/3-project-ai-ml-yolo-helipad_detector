@@ -9,7 +9,7 @@
 <!-- ========= START HEADRE ========= -->
 # <p align="center"> 🚁 [AI/ML]() · [Project 2]() · [Computer Vision]() · [Helipad Detector]() </p>
 
-### <p align="center"> [***Mission:***]() Helipad Detection in São Paulo Satellite Imagery using YOLO · Responsible AI · Data Governance · LGPD 🛰️</p>
+### <p align="center"> [***Mission:***]() Helipad Detection in São Paulo Satellite Imagery using YOLO · Responsible AI · Data Governance · LGPD </p>
 
 <br><br>
 
@@ -32,17 +32,16 @@
 <br><br>
 
 
-##### <p align="center"> ⟡ ⋆Some rooftops hide swimming pools. Others hide helicopters.⋆ ⟡
+##### <p align="center"> ⋆Some rooftops hide swimming pools.  Others hide helicopters.⋆ 
 
-###### <p align="center">  *Not every rooftop is just... a rooftop.*  </b> 
+###### <p align="center">  ⟡ *Not every rooftop is just... a rooftop.*  </b> 
 
-<br>
 
-<p align="center"> ⚡
+### <p align="center"> 🛰️
 
-<br>
 
-###### <p align="center"> *Finding hidden H’s in the Concrete Jungle* </p>  <p align="center"> ⋆One rooftop at a time⋆
+###### <p align="center"> *Finding hidden H’s in the Concrete Jungle* ⟡ </p>  <p align="center"> ⋆One rooftop at a time⋆  </p>  <p align="center"> ⚡
+<p align="center">
 
 
 <br>
