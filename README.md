@@ -222,10 +222,11 @@
 - [Project Context](#project-context)
 - [Business and Research Problem](#business-and-research-problem)
 - [Extra Automation Contribution](#extra-automation-contribution)
+- [Geospatial Visualization (Kepler.gl)](#geospatial-visualization-keplergl)
 - [Overall Flow Architecture](#overall-flow-architecture)
 - [AI/ML Ops Pipeline](#aiml-ops-pipeline)
 - [Repository Structure](#repository-structure)
-- [What is `Heliponto.rar`?](#what-is-helipontorar)
+- [What is `data/raw/helipad_dataset.rar`?](#what-is-helipontorar)
 - [What is Roboflow in This Project?](#what-is-roboflow-in-this-project)
 - [Methodology](#methodology)
 - [Full Technical Pipeline](#full-technical-pipeline)
@@ -243,7 +244,7 @@
 - [Deliverables Covered](#deliverables-covered)
 - [Results Analysis](#results-analysis)
 - [Strengths, Limitations and Future Improvements](#strengths-limitations-and-future-improvements)
-- [Responsible AI, Data Governance and LGPD](#responsible-ai-data-governance-and-lgpd)
+- [Ethics, LGPD and Governance](#ethics-lgpd-and-governance)
 - [Image Attribution](#image-attribution)
 - [References](#references)
 - [Acknowledgements](#acknowledgements)
@@ -253,20 +254,18 @@
 
 ## [Project Definition]()
 
-The **Helipoint Detector** project implements a full **Object Detection** pipeline to identify helipads on rooftops in the city of São Paulo, using high-resolution aerial and orbital imagery and models from the **YOLOv8/YOLOv11** family.
+The **Helipoint Detector** project delivers an end-to-end **Object Detection** pipeline for identifying rooftop helipads across São Paulo using high-resolution aerial and satellite imagery with **YOLOv8/YOLOv11** models.
 
-The repository covers the entire lifecycle of an applied AI system in computer vision: programmatic image collection, geospatial automation, dataset creation and curation, annotation, preprocessing, training, quantitative and qualitative evaluation, inference on unseen neighborhoods and, optionally, an application layer for demo purposes.
+The repository documents the complete development workflow of an applied computer vision system, including geospatial image acquisition, automated data preparation, dataset construction, annotation, preprocessing, model training, performance evaluation, and inference on previously unseen urban areas. It also includes an optional application layer for interactive demonstrations.
 
-The repository was designed to present the complete lifecycle of an AI application in a documented and academically transparent form, making it useful for professors, beginner practitioners, and students learning object detection with real urban imagery.
-
-Rather than relying on a ready-made benchmark, the project emphasizes the construction of an original dataset, reproducible experimentation, and inference on unseen regions.
+Built with a focus on reproducibility and transparency, the project goes beyond the use of existing benchmarks by creating and curating an original urban dataset. The repository serves as a structured learning and research reference, demonstrating how modern object detection solutions can be designed, evaluated, and deployed using real-world geospatial data.
 
 <br><br>
 
 
 ## [Objective]()
 
-The main objective is to build an **end-to-end system** capable of detecting helipads on rooftops in the city of São Paulo, following all model lifecycle stages defined in the briefing:
+The main objective is to develop an end-to-end computer vision system capable of detecting rooftop helipads across São Paulo, covering the complete model lifecycle defined in the project scope:
 
 [-]() programmatic acquisition of satellite data  
 [-]() visual curation and tile filtering  
@@ -276,9 +275,9 @@ The main objective is to build an **end-to-end system** capable of detecting hel
 [-]() quantitative evaluation and qualitative error analysis  
 [-]() inference on an entire neighborhood not used during training  
 
-From an educational perspective, the work was also designed to help students understand how a real AI pipeline is built, validated, and communicated. The project therefore integrates data collection, annotation, preprocessing, model training, evaluation, and simple deployment in one coherent workflow.
+Beyond the technical implementation, the project was designed as an educational framework to demonstrate how real-world AI systems are built, validated, and communicated. The workflow integrates data acquisition, dataset creation, annotation, preprocessing, model development, evaluation, and lightweight deployment into a unified pipeline.
 
-Methodologically, the project reinforces that model performance is directly tied to **data quality**, annotation consistency and geographical diversity, rather than small tweaks to the architecture.
+Methodologically, the project highlights that reliable computer vision performance depends primarily on data quality, annotation consistency, and geographic diversity, rather than only on architectural adjustments or model complexity.
 
 <br><br>
 
@@ -420,8 +419,10 @@ classDef navy fill:#020817,stroke:#0a1a2f,color:#D1D5DB,stroke-width:1.5px;
 classDef group fill:#000000,stroke:#0a1a2f,color:#F8FAFC,stroke-width:1px;
 
 
-%% ===== G1 =====
 subgraph G1["Geospatial Discovery"]
+A["Helipad data acquisition"]
+B["Coordinates + metadata"]
+C["Geographic bounding boxes"]
 
 A["FlightMarket aviation website"]
 B["Selenium automation<br/>helipad_bot.py"]
@@ -444,12 +445,24 @@ I["Manual visual triage"]
 J["Selected helipad images"]
 
 G --> H --> I --> J
-
+=======
+A --> B --> C
 end
 
 
-%% ===== G3 =====
+subgraph G2["Satellite Image Acquisition"]
+D["ESRI World Imagery"]
+E["Tile download + mosaics"]
+F["Visual image curation"]
+
+D --> E --> F
+end
+
+
 subgraph G3["Dataset Engineering"]
+G["Annotation<br/>Bounding boxes"]
+H["Preprocessing + Augmentation"]
+I["YOLO Dataset<br/>train / valid / test"]
 
 K["Roboflow upload"]
 L["Bounding boxes<br/>single class: helipad"]
@@ -479,25 +492,32 @@ Q --> S
 Q --> T
 T --> U
 Q --> V
+G --> H --> I
 
 end
 
 
-%% ===== CONNECTIONS =====
+subgraph G4["YOLO Training & Validation"]
+J["YOLOv8 / YOLOv11 Training"]
+K["Metrics + Error Analysis"]
+L["Unseen Region Inference"]
+M["Optional Web Demo"]
 
-F --> G
+
 J --> K
-O --> P
+J --> L
+J --> M
+end
 
 
-%% ===== COLORS =====
+C --> D
+F --> G
+I --> J
 
-class A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V navy;
 
+class A,B,C,D,E,F,G,H,I,J,K,L,M navy;
 class G1,G2,G3,G4 group;
 
-
-%% ===== LINKS =====
 
 linkStyle default stroke:#14b8a6,stroke-width:2.5px,opacity:0.95;
 ```
