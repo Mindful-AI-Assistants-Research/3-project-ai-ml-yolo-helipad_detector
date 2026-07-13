@@ -215,11 +215,6 @@
 
 ## [Table of Contents]()
 
-
-<br><br>
-
-## [Table of Contents]()
-
 - [Project Definition](#project-definition)
 - [Objective](#objective)
 - [Why Helipads?](#why-helipads)
@@ -419,108 +414,57 @@ The solution can be viewed as an architecture with **seven main blocks**:
 
 flowchart TD
 
-%% ===== CLASSES =====
 classDef navy fill:#020817,stroke:#0a1a2f,color:#ffffff,stroke-width:2px;
 classDef group fill:#000000,stroke:#0a1a2f,color:#ffffff,stroke-width:2px;
 
 
-%% ===== G1 =====
 subgraph G1["Geospatial Discovery"]
+A["Helipad data acquisition"]
+B["Coordinates + metadata"]
+C["Geographic bounding boxes"]
 
-A["FlightMarket / aviation website"]
-
-B["Selenium automation<br/>src/geospatial/helipad_bot.py"]
-
-C["Helipad records + metadata"]
-
-D["Coordinates CSV<br/>src/geospatial/helipad_coordinates.csv"]
-
-E["Coordinate conversion<br/>src/geospatial/transform_coordinates.py"]
-
-F["Geographic bounding boxes"]
-
-A --> B --> C --> D --> E --> F
-
+A --> B --> C
 end
 
 
-%% ===== G2 =====
-subgraph G2["Visual Acquisition"]
+subgraph G2["Satellite Image Acquisition"]
+D["ESRI World Imagery"]
+E["Tile download + mosaics"]
+F["Visual image curation"]
 
-G["ESRI World Imagery<br/>XYZ tile download"]
-
-H["Image mosaics by region<br/>src/geospatial/geospatial_image_collection.ipynb"]
-
-I["Manual visual triage"]
-
-J["Selected images with helipads"]
-
-G --> H --> I --> J
-
+D --> E --> F
 end
 
 
-%% ===== G3 =====
 subgraph G3["Dataset Engineering"]
+G["Annotation<br/>Bounding boxes"]
+H["Preprocessing + Augmentation"]
+I["YOLO Dataset<br/>train / valid / test"]
 
-K["Roboflow upload"]
-
-L["Bounding box annotation<br/>single class: helipad"]
-
-M["Preprocessing + augmentations<br/>resize 640x640"]
-
-N["Dataset split<br/>train / valid / test"]
-
-O["YOLO export<br/>data.yaml + labels"]
-
-K --> L --> M --> N --> O
-
+G --> H --> I
 end
 
 
-%% ===== G4 =====
-subgraph G4["Modeling and Validation"]
+subgraph G4["YOLO Training & Validation"]
+J["YOLOv8 / YOLOv11 Training"]
+K["Metrics + Error Analysis"]
+L["Unseen Region Inference"]
+M["Optional Web Demo"]
 
-P["Google Colab training<br/>Ultralytics YOLOv8 / YOLOv11"]
-
-Q["Runs, weights and metrics<br/>runs/detect/.../best.pt"]
-
-R["Quantitative evaluation<br/>mAP, Precision, Recall,<br/>confusion matrix"]
-
-S["Qualitative analysis<br/>hits, false positives,<br/>false negatives"]
-
-T["Inference on unseen neighborhood<br/>New Images/"]
-
-U["Generalization assessment"]
-
-V["Optional web app<br/>Site.py"]
-
-
-P --> Q
-Q --> R
-Q --> S
-Q --> T
-T --> U
-Q --> V
-
-end
-
-
-%% ===== CONNECTIONS =====
-
-F --> G
 J --> K
-O --> P
+J --> L
+J --> M
+end
 
 
-%% ===== COLORS =====
+C --> D
+F --> G
+I --> J
 
-class A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V navy;
 
+class A,B,C,D,E,F,G,H,I,J,K,L,M navy;
 class G1,G2,G3,G4 group;
 
-
-%% ===== LINKS =====
 
 linkStyle default stroke:#14b8a6,stroke-width:2.5px,opacity:0.95;
 ```
