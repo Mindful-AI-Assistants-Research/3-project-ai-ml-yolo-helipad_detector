@@ -398,17 +398,17 @@ The solution can be viewed as an architecture with **seven main blocks**:
 
 <br>
 
-
 ```mermaid
 %%{
   init: {
     "theme": "dark",
     "themeVariables": {
       "background": "#020617",
-      "primaryTextColor": "#ffffff",
+      "primaryTextColor": "#14B8A6",
       "lineColor": "#14b8a6",
       "defaultLinkColor": "#14b8a6",
-      "fontFamily": "Inter, Segoe UI, Arial, sans-serif"
+      "fontFamily": "Inter, Segoe UI, Arial, sans-serif",
+      "fontSize": "11px"
     }
   }
 }%%
@@ -416,23 +416,18 @@ The solution can be viewed as an architecture with **seven main blocks**:
 flowchart TD
 
 %% ===== CLASSES =====
-classDef navy fill:#020817,stroke:#0a1a2f,color:#ffffff,stroke-width:2px;
-classDef group fill:#000000,stroke:#0a1a2f,color:#ffffff,stroke-width:2px;
+classDef navy fill:#020817,stroke:#0a1a2f,color:#D1D5DB,stroke-width:1.5px;
+classDef group fill:#000000,stroke:#0a1a2f,color:#F8FAFC,stroke-width:1px;
 
 
 %% ===== G1 =====
 subgraph G1["Geospatial Discovery"]
 
-A["FlightMarket / aviation website"]
-
-B["Selenium automation<br/>src/geospatial/helipad_bot.py"]
-
+A["FlightMarket aviation website"]
+B["Selenium automation<br/>helipad_bot.py"]
 C["Helipad records + metadata"]
-
-D["Coordinates CSV<br/>src/geospatial/helipad_coordinates.csv"]
-
-E["Coordinate conversion<br/>src/geospatial/transform_coordinates.py"]
-
+D["Coordinates CSV<br/>helipad_coordinates.csv"]
+E["Coordinate conversion<br/>transform_coordinates.py"]
 F["Geographic bounding boxes"]
 
 A --> B --> C --> D --> E --> F
@@ -443,13 +438,10 @@ end
 %% ===== G2 =====
 subgraph G2["Visual Acquisition"]
 
-G["ESRI World Imagery<br/>XYZ tile download"]
-
-H["Image mosaics by region<br/>src/geospatial/geospatial_image_collection.ipynb"]
-
+G["ESRI World Imagery<br/>XYZ tiles"]
+H["Image mosaics<br/>geospatial_image_collection.ipynb"]
 I["Manual visual triage"]
-
-J["Selected images with helipads"]
+J["Selected helipad images"]
 
 G --> H --> I --> J
 
@@ -460,13 +452,9 @@ end
 subgraph G3["Dataset Engineering"]
 
 K["Roboflow upload"]
-
-L["Bounding box annotation<br/>single class: helipad"]
-
-M["Preprocessing + augmentations<br/>resize 640x640"]
-
+L["Bounding boxes<br/>single class: helipad"]
+M["Preprocessing + augmentation<br/>resize 640x640"]
 N["Dataset split<br/>train / valid / test"]
-
 O["YOLO export<br/>data.yaml + labels"]
 
 K --> L --> M --> N --> O
@@ -475,22 +463,15 @@ end
 
 
 %% ===== G4 =====
-subgraph G4["Modeling and Validation"]
+subgraph G4["Modeling & Validation"]
 
-P["Google Colab training<br/>Ultralytics YOLOv8 / YOLOv11"]
-
-Q["Runs, weights and metrics<br/>runs/detect/.../best.pt"]
-
-R["Quantitative evaluation<br/>mAP, Precision, Recall,<br/>confusion matrix"]
-
-S["Qualitative analysis<br/>hits, false positives,<br/>false negatives"]
-
-T["Inference on unseen neighborhood<br/>New Images/"]
-
-U["Generalization assessment"]
-
-V["Optional web app<br/>Site.py"]
-
+P["Colab training<br/>Ultralytics YOLOv8 / YOLOv11"]
+Q["Weights + metrics<br/>runs/detect/.../best.pt"]
+R["Evaluation<br/>mAP • Precision • Recall<br/>confusion matrix"]
+S["Error analysis<br/>hits • FP • FN"]
+T["Inference<br/>New Images/"]
+U["Generalization<br/>Assessment"]
+V["Web demo<br/>Site.py"]
 
 P --> Q
 Q --> R
